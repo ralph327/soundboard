@@ -1,0 +1,40 @@
+header {	
+	top:0;
+	width:100%;
+	transition: top 0.2s ease-in-out;
+	&.slideInDown{
+		-webkit-animation-duration: .5s;
+		animation-duration: .5s;
+	}
+	&.hide {
+	    top: -$header-height;
+	}
+	.wrapper {
+		@include outer-container;
+		background:#F2DA81;
+	}
+	h1 {
+		float: left;
+		font-size:modular-scale(2);
+		font-family: $title-font;
+		@include pad(default);
+		@include margin(.7em); 
+		a, a:hover {
+			color:inherit;
+		}
+	}
+	
+	h1.lato {
+		font-family: 'Lato', sans-serif;
+	}
+	h1.alegreya {
+		font-family: 'Alegreya Sans', sans-serif;
+	}
+	h1.robotc {
+		font-family: 'Roboto Condensed', sans-serif;
+	}
+	h1.robots {
+		font-family: 'Roboto Slab', serif;
+	}
+
+}

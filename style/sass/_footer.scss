@@ -1,0 +1,6 @@
+footer {
+	@include outer-container;
+	@include padding(1em, null, 1em, null);
+	background: #93535F;
+	color:$font-color-on-dark;
+}

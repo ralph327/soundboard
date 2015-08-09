@@ -1,0 +1,18 @@
+#main-navigation {
+	padding-top:$header-height;
+	background: #543E48;
+	color:$font-color-on-dark;
+	@include outer-container;
+
+	.main-nav-link {
+		@include span-columns(1);
+		@include row();
+		@include padding(1em null);
+		
+		&.first {
+			@include padding(null null null 1em);
+		}
+	}
+	
+}
+

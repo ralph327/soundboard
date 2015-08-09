@@ -1,0 +1,6 @@
+nav#side-navigation {
+	@include span-columns(3);
+	@include padding(1em);
+	background: #93535F;
+	float:right;
+}
