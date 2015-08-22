@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"log"
 	"strings"
+	"fmt"
 )
 
 type AudioLibrary struct{
@@ -39,7 +40,10 @@ func main(){
 	/* Set the Routes
 	 */ 
 	r.GET("/", audioLibrary.Home())
-	r.POST("/play", audioLibrary.Play())
+	r.POST("/play", audioLibrary.Do("play"))
+	r.POST("/pause", audioLibrary.Do("pause"))
+	r.POST("/resume", audioLibrary.Do("resume"))
+	r.POST("/stop", audioLibrary.Do("stop"))
 	
 	/* Start the Server
 	 */ 
@@ -69,8 +73,10 @@ func (al *AudioLibrary) Home() gin.HandlerFunc {
 	
 	for _, file := range al.Lib {
 		body += template.HTML(`
-			<li class="block" id="`+file.Name+`">
-			<P>` + file.Filename + `</P>
+			<li class="block sound" id="`+file.Name+`">
+			<P>` + file.Name + `</P>
+			<P class="inline play">Play</P>
+			<P class="inline stop">Stop</P>
 			</li>
 		`)
 	}
@@ -84,17 +90,33 @@ func (al *AudioLibrary) Home() gin.HandlerFunc {
 	}
 }
 
-func (al *AudioLibrary) Play() gin.HandlerFunc {
+func (al *AudioLibrary) Do(action string) gin.HandlerFunc {
 	return func(c *gin.Context){
 		
 		name := c.PostForm("name")
 		
-		err := al.Lib[name].Cmd.Run()
+		message := fmt.Sprintf(name)
 		
-		if err != nil {
+		fmt.Println(action ,message)
+		
+		var err error
+		
+		switch action {
+			case "play":
+				err = al.Lib[name].Play()
+			case "pause":
+				err = al.Lib[name].Pause()
+			case "resume":
+				err = al.Lib[name].Resume()
+			case "stop":
+				err = al.Lib[name].Stop()
+		}		
+		
+		
+		if err != nil && action != "stop" && action != "play" {
 			log.Fatal(err)
 		}
 		
-		c.JSON(http.StatusOK, gin.H{"message": name,})
+		c.JSON(http.StatusOK, gin.H{"duration": al.Lib[name].Duration,})
 	}
 }

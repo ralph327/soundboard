@@ -2,19 +2,29 @@ main {
 	@include outer-container;
 	background: tint(#FFEDCB, 45%);
 	min-height:$base-height / 2;
-  height:auto;
+	height:auto;
 	line-height: $base-line-height;
 }
 
 article {
 	@include span-columns(9);
-  margin-left:15px;
-  margin-top:10px;
+	margin-left:15px;
+	margin-top:10px;
 }
 
 li.block {
-  @include span-columns(3);
-  @include omega(4n);
+	@include span-columns(3);
+	@include omega(4n);
+	@include border-top-radius(5px);
+	@include border-right-radius(5px);
+	@include border-bottom-radius(5px);
+	@include border-left-radius(5px);
+	border-style: solid;
+	
+	p.inline{
+		@include padding(1em null);
+		display:inline;
+	}
 }
 
 article.type-system-geometric {
